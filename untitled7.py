@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1CPrb2tpTrUnyuaIzoQszIj9ZsV7Je6xF
 """
 
+# -*- coding: utf-8 -*-
 import streamlit as st
 import pandas as pd
 import pickle
@@ -39,29 +40,29 @@ with tab1:
         submit = st.form_submit_button("Predict")
 
         if submit:
-    
+            # Ensure column names and order match training data
             expected_cols = ['tenure', 'PhoneService', 'Contract', 'PaperlessBilling',
                              'PaymentMethod', 'MonthlyCharges', 'TotalCharges']
-        
+
             input_df = pd.DataFrame([[
                 tenure, phone, contract, billing, payment, monthly, total
             ]], columns=expected_cols)
-        
+
+            # Predict using the loaded model
             pred = model.predict(input_df)[0]
             prob = model.predict_proba(input_df)[0][1]
-        
+
             if pred == 1:
                 st.error(f"⚠️ This customer is likely to churn! (Confidence: {prob:.2%})")
             else:
                 st.success(f"✅ This customer is likely to stay. (Confidence: {1 - prob:.2%})")
 
-            
 # --- TAB 2: Churn Distribution ---
 with tab2:
     st.header("Churn Distribution Charts")
 
     try:
-
+        # Load dataset for visualizations
         df = pd.read_csv("churn_data.csv")
 
         col1, col2 = st.columns(2)
@@ -82,4 +83,4 @@ with tab2:
             st.pyplot(fig2)
 
     except FileNotFoundError:
-        st.warning("Upload your dataset as 'your_dataset.csv' to see distribution charts.")
+        st.warning("Please upload or include 'churn_data.csv' in your project folder to view charts.")
