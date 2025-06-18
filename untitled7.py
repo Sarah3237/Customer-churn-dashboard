@@ -56,31 +56,3 @@ with tab1:
                 st.error(f"⚠️ This customer is likely to churn! (Confidence: {prob:.2%})")
             else:
                 st.success(f"✅ This customer is likely to stay. (Confidence: {1 - prob:.2%})")
-
-# --- TAB 2: Churn Distribution ---
-with tab2:
-    st.header("Churn Distribution Charts")
-
-    try:
-        # Load dataset for visualizations
-        df = pd.read_csv("churn_data.csv")
-
-        col1, col2 = st.columns(2)
-
-        with col1:
-            st.subheader("By Contract Type")
-            fig1, ax1 = plt.subplots()
-            sns.countplot(x='Contract', hue='Churn', data=df, ax=ax1)
-            ax1.set_xlabel("Contract Type (0=M2M, 1=1yr, 2=2yr)")
-            st.pyplot(fig1)
-
-        with col2:
-            st.subheader("By Payment Method")
-            fig2, ax2 = plt.subplots()
-            sns.countplot(x='PaymentMethod', hue='Churn', data=df, ax=ax2)
-            ax2.set_xlabel("Payment Method (0=E-check, 1=Mailed, 2=Bank, 3=Card)")
-            plt.xticks(rotation=45)
-            st.pyplot(fig2)
-
-    except FileNotFoundError:
-        st.warning("Please upload or include 'churn_data.csv' in your project folder to view charts.")
