@@ -21,7 +21,7 @@ model = pickle.load(open("churn_model.pkl", "rb"))
 st.title("📊 Customer Churn Prediction Dashboard")
 
 # Tabs
-tab1, tab2 = st.tabs(["🔮 Predict Churn", "📋 Churn Distribution"])
+tab1, = st.tabs(["🔮 Predict Churn"])
 
 # --- TAB 1: Predict Churn ---
 with tab1:
