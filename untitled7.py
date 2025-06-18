@@ -63,7 +63,7 @@ with tab2:
 
     try:
 
-        df = pd.read_csv("your_dataset.csv")
+        df = pd.read_csv("churn_data.csv")
 
         col1, col2 = st.columns(2)
 
