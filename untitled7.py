@@ -39,24 +39,23 @@ with tab1:
         submit = st.form_submit_button("Predict")
 
         if submit:
-            input_df = pd.DataFrame({
-                'tenure': [tenure],
-                'PhoneService': [phone],
-                'Contract': [contract],
-                'PaperlessBilling': [billing],
-                'PaymentMethod': [payment],
-                'MonthlyCharges': [monthly],
-                'TotalCharges': [total]
-            })
-
+    
+            expected_cols = ['tenure', 'PhoneService', 'Contract', 'PaperlessBilling',
+                             'PaymentMethod', 'MonthlyCharges', 'TotalCharges']
+        
+            input_df = pd.DataFrame([[
+                tenure, phone, contract, billing, payment, monthly, total
+            ]], columns=expected_cols)
+        
             pred = model.predict(input_df)[0]
             prob = model.predict_proba(input_df)[0][1]
-
+        
             if pred == 1:
                 st.error(f"⚠️ This customer is likely to churn! (Confidence: {prob:.2%})")
             else:
                 st.success(f"✅ This customer is likely to stay. (Confidence: {1 - prob:.2%})")
 
+            
 # --- TAB 2: Churn Distribution ---
 with tab2:
     st.header("Churn Distribution Charts")
